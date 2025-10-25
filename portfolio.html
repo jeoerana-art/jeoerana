@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+<head>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+/>
+
+</head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeo Erana - Portfolio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    
+    /* Animated Background */
+    .bg-gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      opacity: 0.1;
+      z-index: -1;
+      animation: gradientShift 15s ease infinite;
+    }
+    
+    @keyframes gradientShift {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(1.2) rotate(5deg); }
+    }
+    
+    /* Floating particles */
+    .particle {
+      position: fixed;
+      width: 3px;
+      height: 3px;
+      background: rgba(255,255,255,0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: float 20s infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+    }
+    
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 25px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 40px;
+    }
+    
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+    
+    .nav-links a:hover {
+      color: #667eea;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #667eea;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 20px 50px;
+      position: relative;
+    }
+    
+    .hero-content h1 {
+      font-size: 5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease;
+      letter-spacing: -2px;
+    }
+    
+    .hero-content .subtitle {
+      font-size: 1.8rem;
+      color: #aaa;
+      margin-bottom: 15px;
+      animation: fadeInUp 1.2s ease;
+      font-weight: 300;
+    }
+    
+    .hero-content .description {
+      font-size: 1.1rem;
+      color: #888;
+      max-width: 600px;
+      margin: 0 auto 40px;
+      animation: fadeInUp 1.4s ease;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      animation: fadeInUp 1.6s ease;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      padding: 15px 35px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+    }
+    
+    .btn-secondary {
+      background: transparent;
+      color: white;
+      border: 2px solid rgba(255,255,255,0.3);
+    }
+    
+    .btn-secondary:hover {
+      border-color: #667eea;
+      background: rgba(102, 126, 234, 0.1);
+    }
+    
+    /* About Section */
+    .section {
+      padding: 100px 50px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      font-size: 3rem;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 60px;
+      background: linear-gradient(135deg, #fff 0%, #667eea 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    
+    .about-image {
+      position: relative;
+    }
+    
+    .about-image img {
+      width: 100%;
+      max-width: 400px;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+      margin: 0 auto;
+      display: block;
+    }
+    
+    .about-text h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #667eea;
+    }
+    
+    .about-text p {
+      font-size: 1.1rem;
+      color: #aaa;
+      margin-bottom: 20px;
+      line-height: 1.8;
+    }
+    
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .skill-tag {
+      padding: 10px 20px;
+      background: rgba(102, 126, 234, 0.1);
+      border: 1px solid rgba(102, 126, 234, 0.3);
+      border-radius: 25px;
+      color: #667eea;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+    }
+    
+    .project-card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.1);
+      cursor: pointer;
+    }
+    
+    .project-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+      border-color: rgba(102, 126, 234, 0.5);
+    }
+    
+    .project-image {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s ease;
+    }
+    
+    .project-card:hover .project-image img {
+      transform: scale(1.1);
+    }
+    
+    .project-content {
+      padding: 30px;
+    }
+    
+    .project-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+    
+    .project-content p {
+      color: #aaa;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    
+    .tag {
+      padding: 5px 15px;
+      background: rgba(102, 126, 234, 0.2);
+      border-radius: 15px;
+      font-size: 0.85rem;
+      color: #667eea;
+    }
+    
+    /* Contact Section */
+    .video-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .video-wrapper {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+    }
+    
+    .video-wrapper video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .video-description {
+      margin-top: 25px;
+      font-size: 1.1rem;
+      color: #aaa;
+    }
+    
+    /* Contact Section */
+    .contact-content {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .contact-content p {
+      font-size: 1.2rem;
+      color: #aaa;
+      margin-bottom: 40px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+    
+    .social-link {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-link:hover {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-color: transparent;
+      transform: translateY(-5px);
+    }
+    
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: #666;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      nav {
+        padding: 20px 25px;
+      }
+      
+      .nav-links {
+        gap: 20px;
+      }
+      
+      .hero-content h1 {
+        font-size: 3rem;
+      }
+      
+      .hero-content .subtitle {
+        font-size: 1.3rem;
+      }
+      
+      .section {
+        padding: 60px 25px;
+      }
+      
+      .section-title {
+        font-size: 2rem;
+      }
+      
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 300px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg-gradient"></div>
+  
+  <!-- Floating Particles -->
+  <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+  <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+  <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+  <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
+  <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
+  <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
+  <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
+  <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
+  <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
+
+  <nav>
+    <div class="logo">JEO</div>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#video">Video</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Jeo Erana</h1>
+      <p class="subtitle">Aspiring IT Professional
+</p>
+      <p class="description">
+        Learning, building, and growing — one project at a time.
+      </p>
+      <div class="cta-buttons">
+        <a href="#projects" class="btn btn-primary">View My Work</a>
+        <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-grid">
+      <div class="about-image">
+        <img src="jeo.jpg" alt="Jonard Maloloy-on">
+      </div>
+      <div class="about-text">
+        <h3>Hi, I'm Jeo 👋</h3>
+        <p>
+          I'm a passionate building innovative and user-friendly digital solutions that make everyday task simplier and more effiecient.
+          My Interest span from web development and system design to exploring new technologies that enhance productivity and connectivity.
+        </p>
+        <p>
+          As an aspiring IT professional, I aim to continuously grow my technical skills and creativity, turning ideas into meaningful projects that solve real-world problems.
+        </p>
+        <div class="skills">
+          <span class="skill-tag">UI/UX Design</span>
+          <span class="skill-tag">Web Development</span>
+          <span class="skill-tag">Figma</span>
+          <span class="skill-tag">React</span>
+          <span class="skill-tag">JavaScript</span>
+          <span class="skill-tag">CSS</span>
+          <span class="skill-tag">Responsive Design</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" class="section">
+    <h2 class="section-title">Featured Video</h2>
+    <div class="video-container">
+      <div class="video-wrapper">
+        <video controls>
+          <source src="1022.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+      <p class="video-description">Check out my latest work and creative process</p>
+    </div>
+  </section>
+
+  <section id="projects" class="section">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-image">
+          <img src="ecommerce.jpg" alt="Project 1">
+        </div>
+        <div class="project-content">
+          <h3>E-Commerce Platform</h3>
+          <p>A modern e-commerce solution with seamless checkout experience and beautiful product galleries.</p>
+          <div class="project-tags">
+            <span class="tag">React</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">MongoDB</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">
+          <img src="saas.jpg" alt="Project 2">
+        </div>
+        <div class="project-content">
+          <h3>SaaS Dashboard</h3>
+          <p>Intuitive dashboard design with powerful analytics and data visualization capabilities.</p>
+          <div class="project-tags">
+            <span class="tag">Figma</span>
+            <span class="tag">Vue.js</span>
+            <span class="tag">Chart.js</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="project-card">
+        <div class="project-image">
+          <img src="alumni.jpg" alt="Project 3">
+        </div>
+        <div class="project-content">
+          <h3>Alumni Connect</h3>
+          <p>A web-based platform that helps Lapu-Lapu City College track graduates’ employment status and manage alumni document requests efficiently..</p>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">PHP</span>
+             <span class="tag">MySQL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <h2 class="section-title">Let's Work Together</h2>
+    <div class="contact-content">
+      <p>
+        Have a project in mind or just want to chat? 
+        I'm always open to discussing new opportunities and creative ideas.
+      </p>
+      <div class="cta-buttons">
+<a href="https://mail.google.com/mail/?view=cm&fs=1&to=jeoerana@gmail.com&su=Project%20Inquiry&body=Hi%20Jeo,%20I%20would%20like%20to%20discuss%20a%20project%20with%20you."
+   target="_blank"
+   class="btn btn-primary">
+   Send Email
+</a>      </div>
+      <div class="social-links" style="margin-top: 40px;">
+        <div class="social-links" style="margin-top: 40px;">
+  <a href="https://twitter.com/@eranajeo" target="_blank" class="social-link">
+    <i class="fab fa-x-twitter"></i>
+  </a>
+       <a href="https://linkedin.com/in/jeoerana" target="_blank" class="social-link">
+    <i class="fab fa-linkedin"></i>
+    </a>
+         <a href="https://instagram.com/jeoerana" target="_blank" class="social-link">
+    <i class="fab fa-instagram"></i>
+  </a>
+        <a href="https://github.com/jeoerana-art" target="_blank" class="social-link">
+    <i class="fab fa-github"></i>
+  </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Jeo Erana All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
