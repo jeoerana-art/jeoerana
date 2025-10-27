@@ -372,6 +372,63 @@
       background: rgba(102, 126, 234, 0.6);
     }
     
+    /* Video Section */
+    .video-container {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .video-wrapper-slider {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+      border: 2px solid rgba(102, 126, 234, 0.3);
+    }
+    
+    .video-slider {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      height: 0;
+    }
+    
+    .video-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+    
+    .video-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    
+    .video-slide video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .video-slide-caption {
+      margin-top: 25px;
+      font-size: 1.1rem;
+      color: #aaa;
+      text-align: center;
+    }
+    
+    .video-dots {
+      margin-top: 30px;
+    }
+    
     /* Projects Section */
     .projects-grid {
       display: grid;
@@ -445,37 +502,6 @@
       border-radius: 15px;
       font-size: 0.85rem;
       color: #667eea;
-    }
-    
-    /* Video Section */
-    .video-container {
-      max-width: 900px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      border-radius: 20px;
-      overflow: hidden;
-      box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
-      border: 2px solid rgba(102, 126, 234, 0.3);
-    }
-    
-    .video-wrapper video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-    
-    .video-description {
-      margin-top: 25px;
-      font-size: 1.1rem;
-      color: #aaa;
     }
     
     /* Contact Section */
@@ -688,15 +714,36 @@
   </section>
 
   <section id="video" class="section">
-    <h2 class="section-title">Featured Video</h2>
+    <h2 class="section-title">Featured Videos</h2>
     <div class="video-container">
-      <div class="video-wrapper">
-        <video controls>
-          <source src="1022.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
+      <div class="video-wrapper-slider">
+        <button class="gallery-btn gallery-btn-prev video-prev">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <div class="video-slider">
+          <div class="video-slide active">
+            <video controls>
+              <source src="1022.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-slide-caption">Check out my latest work and creative process</div>
+          </div>
+          <div class="video-slide">
+            <video controls>
+              <source src="ga4.mp4" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+            <div class="video-slide-caption">Behind the scenes of my creative journey</div>
+          </div>
+        </div>
+        <button class="gallery-btn gallery-btn-next video-next">
+          <i class="fas fa-chevron-right"></i>
+        </button>
       </div>
-      <p class="video-description">Check out my latest work and creative process</p>
+      <div class="gallery-dots video-dots">
+        <span class="dot active" data-video="0"></span>
+        <span class="dot" data-video="1"></span>
+      </div>
     </div>
   </section>
 
@@ -788,9 +835,9 @@
     // Gallery functionality
     let currentSlide = 0;
     const slides = document.querySelectorAll('.gallery-slide');
-    const dots = document.querySelectorAll('.dot');
-    const prevBtn = document.querySelector('.gallery-btn-prev');
-    const nextBtn = document.querySelector('.gallery-btn-next');
+    const dots = document.querySelectorAll('.gallery-dots:not(.video-dots) .dot');
+    const prevBtn = document.querySelector('.gallery-btn-prev:not(.video-prev)');
+    const nextBtn = document.querySelector('.gallery-btn-next:not(.video-next)');
     const slider = document.querySelector('.gallery-slider');
     
     let touchStartX = 0;
@@ -850,6 +897,75 @@
     
     // Auto-play (optional - cycles every 5 seconds)
     setInterval(nextSlide, 5000);
+    
+    // Video slider functionality
+    let currentVideoSlide = 0;
+    const videoSlides = document.querySelectorAll('.video-slide');
+    const videoDots = document.querySelectorAll('.video-dots .dot');
+    const videoPrevBtn = document.querySelector('.video-prev');
+    const videoNextBtn = document.querySelector('.video-next');
+    const videoSlider = document.querySelector('.video-slider');
+    
+    let videoTouchStartX = 0;
+    let videoTouchEndX = 0;
+    
+    function showVideoSlide(n) {
+      if (n >= videoSlides.length) currentVideoSlide = 0;
+      if (n < 0) currentVideoSlide = videoSlides.length - 1;
+      
+      // Pause all videos
+      videoSlides.forEach(slide => {
+        const video = slide.querySelector('video');
+        if (video) video.pause();
+        slide.classList.remove('active');
+      });
+      
+      videoDots.forEach(dot => dot.classList.remove('active'));
+      
+      videoSlides[currentVideoSlide].classList.add('active');
+      videoDots[currentVideoSlide].classList.add('active');
+    }
+    
+    function nextVideoSlide() {
+      currentVideoSlide++;
+      showVideoSlide(currentVideoSlide);
+    }
+    
+    function prevVideoSlide() {
+      currentVideoSlide--;
+      showVideoSlide(currentVideoSlide);
+    }
+    
+    // Video button controls
+    videoNextBtn.addEventListener('click', nextVideoSlide);
+    videoPrevBtn.addEventListener('click', prevVideoSlide);
+    
+    // Video dot controls
+    videoDots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        currentVideoSlide = index;
+        showVideoSlide(currentVideoSlide);
+      });
+    });
+    
+    // Video touch/swipe controls
+    videoSlider.addEventListener('touchstart', (e) => {
+      videoTouchStartX = e.changedTouches[0].screenX;
+    });
+    
+    videoSlider.addEventListener('touchend', (e) => {
+      videoTouchEndX = e.changedTouches[0].screenX;
+      handleVideoSwipe();
+    });
+    
+    function handleVideoSwipe() {
+      if (videoTouchEndX < videoTouchStartX - 50) {
+        nextVideoSlide();
+      }
+      if (videoTouchEndX > videoTouchStartX + 50) {
+        prevVideoSlide();
+      }
+    }
   </script>
 
 </body>
