@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Jeo Erana - Portfolio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
     * {
       margin: 0;
@@ -20,6 +21,15 @@
       line-height: 1.6;
     }
     
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+    
     /* Animated Background */
     .bg-gradient {
       position: fixed;
@@ -27,97 +37,10 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-      opacity: 0.15;
+      background: rgba(10, 10, 10, 0.3);
+      opacity: 1;
       z-index: -1;
-      animation: gradientShift 15s ease infinite;
-    }
-    
-    @keyframes gradientShift {
-      0%, 100% { transform: scale(1) rotate(0deg); }
-      50% { transform: scale(1.2) rotate(5deg); }
-    }
-    
-    /* Mesh gradient background */
-    .bg-mesh {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -2;
-      background: 
-        radial-gradient(at 0% 0%, rgba(102, 126, 234, 0.2) 0px, transparent 50%),
-        radial-gradient(at 100% 0%, rgba(118, 75, 162, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(240, 147, 251, 0.2) 0px, transparent 50%),
-        radial-gradient(at 0% 100%, rgba(102, 126, 234, 0.15) 0px, transparent 50%);
-      animation: meshMove 20s ease infinite;
-    }
-    
-    @keyframes meshMove {
-      0%, 100% { opacity: 0.8; }
-      50% { opacity: 1; }
-    }
-    
-    /* Animated orbs */
-    .bg-orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.3;
-      z-index: -1;
-      animation: orbFloat 25s ease-in-out infinite;
-    }
-    
-    .bg-orb-1 {
-      width: 400px;
-      height: 400px;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      top: -200px;
-      left: -200px;
-      animation-delay: 0s;
-    }
-    
-    .bg-orb-2 {
-      width: 500px;
-      height: 500px;
-      background: linear-gradient(135deg, #f093fb, #f5576c);
-      bottom: -250px;
-      right: -250px;
-      animation-delay: 8s;
-    }
-    
-    .bg-orb-3 {
-      width: 350px;
-      height: 350px;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      top: 50%;
-      left: 50%;
-      animation-delay: 15s;
-    }
-    
-    @keyframes orbFloat {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33% { transform: translate(100px, -100px) scale(1.1); }
-      66% { transform: translate(-100px, 100px) scale(0.9); }
-    }
-    
-    /* Floating particles */
-    .particle {
-      position: fixed;
-      width: 3px;
-      height: 3px;
-      background: rgba(255,255,255,0.3);
-      border-radius: 50%;
       pointer-events: none;
-      animation: float 20s infinite;
-    }
-    
-    @keyframes float {
-      0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
     }
     
     nav {
@@ -678,23 +601,9 @@
 </head>
 
 <body>
-  <div class="bg-mesh"></div>
+  <div id="canvas-container"></div>
   <div class="bg-gradient"></div>
-  <div class="bg-orb bg-orb-1"></div>
-  <div class="bg-orb bg-orb-2"></div>
-  <div class="bg-orb bg-orb-3"></div>
   
-  <!-- Floating Particles -->
-  <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
-  <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
-  <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
-  <div class="particle" style="left: 40%; animation-delay: 6s;"></div>
-  <div class="particle" style="left: 50%; animation-delay: 8s;"></div>
-  <div class="particle" style="left: 60%; animation-delay: 10s;"></div>
-  <div class="particle" style="left: 70%; animation-delay: 12s;"></div>
-  <div class="particle" style="left: 80%; animation-delay: 14s;"></div>
-  <div class="particle" style="left: 90%; animation-delay: 16s;"></div>
-
   <nav>
     <div class="logo">JEO</div>
     <div class="nav-links">
@@ -729,7 +638,7 @@
       <div class="about-text">
         <h3>Hi, I'm Jeo 👋</h3>
         <p>
-          I’m an aspiring IT professional passionate about building innovative and user-friendly web solutions that make everyday tasks simpler and more efficient. My interests include web development, system design, and exploring emerging technologies that enhance productivity and connectivity.
+          I'm an aspiring IT professional passionate about building innovative and user-friendly web solutions that make everyday tasks simpler and more efficient. My interests include web development, system design, and exploring emerging technologies that enhance productivity and connectivity.
         </p>
         <p>
 I enjoy turning ideas into real-world applications — from intuitive dashboards and e-commerce platforms to automated tracking systems. Each project I build strengthens my goal of creating digital tools that solve real problems and deliver seamless user experiences.        </p>
@@ -898,6 +807,126 @@ I enjoy turning ideas into real-world applications — from intuitive dashboards
   </footer>
 
   <script>
+    // Three.js 3D Background
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(window.devicePixelRatio);
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+    
+    camera.position.z = 50;
+    
+    // Create particles
+    const particlesGeometry = new THREE.BufferGeometry();
+    const particlesCount = 3000;
+    const posArray = new Float32Array(particlesCount * 3);
+    
+    for(let i = 0; i < particlesCount * 3; i++) {
+      posArray[i] = (Math.random() - 0.5) * 150;
+    }
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+    
+    // Particle material with gradient colors
+    const particlesMaterial = new THREE.PointsMaterial({
+      size: 0.15,
+      color: 0x667eea,
+      transparent: true,
+      opacity: 0.8,
+      blending: THREE.AdditiveBlending
+    });
+    
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+    scene.add(particlesMesh);
+    
+    // Create geometric shapes
+    const geometries = [];
+    const materials = [];
+    
+    // Torus
+    const torusGeometry = new THREE.TorusGeometry(10, 3, 16, 100);
+    const torusMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x667eea,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3
+    });
+    const torus = new THREE.Mesh(torusGeometry, torusMaterial);
+    torus.position.set(-30, 20, -20);
+    scene.add(torus);
+    geometries.push(torus);
+    
+    // Icosahedron
+    const icoGeometry = new THREE.IcosahedronGeometry(8, 0);
+    const icoMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0x764ba2,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3
+    });
+    const icosahedron = new THREE.Mesh(icoGeometry, icoMaterial);
+    icosahedron.position.set(30, -20, -30);
+    scene.add(icosahedron);
+    geometries.push(icosahedron);
+    
+    // Octahedron
+    const octaGeometry = new THREE.OctahedronGeometry(6, 0);
+    const octaMaterial = new THREE.MeshBasicMaterial({ 
+      color: 0xf093fb,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.3
+    });
+    const octahedron = new THREE.Mesh(octaGeometry, octaMaterial);
+    octahedron.position.set(0, 30, -40);
+    scene.add(octahedron);
+    geometries.push(octahedron);
+    
+    // Mouse movement
+    let mouseX = 0;
+    let mouseY = 0;
+    
+    document.addEventListener('mousemove', (event) => {
+      mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+      mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+    });
+    
+    // Animation
+    let time = 0;
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 0.001;
+      
+      // Rotate particles
+      particlesMesh.rotation.y += 0.0005;
+      particlesMesh.rotation.x += 0.0003;
+      
+      // Animate shapes
+      geometries.forEach((geo, index) => {
+        geo.rotation.x += 0.003 + index * 0.001;
+        geo.rotation.y += 0.002 + index * 0.001;
+        geo.position.y += Math.sin(time + index) * 0.02;
+      });
+      
+      // Mouse interaction
+      camera.position.x += (mouseX * 5 - camera.position.x) * 0.05;
+      camera.position.y += (mouseY * 5 - camera.position.y) * 0.05;
+      camera.lookAt(scene.position);
+      
+      renderer.render(scene, camera);
+    }
+    
+    animate();
+    
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+    
     // Gallery functionality
     let currentSlide = 0;
     const slides = document.querySelectorAll('.gallery-slide');
@@ -1036,4 +1065,3 @@ I enjoy turning ideas into real-world applications — from intuitive dashboards
 
 </body>
 </html>
-
